@@ -1,5 +1,6 @@
 ### tmux notes
--> actuvate tmux controls: ctrl + b
+```
+-> activate tmux controls: ctrl + b
 -> attach: tmux attach
 -> detach: ctrl + b + d
 -> next window: ctrl + b + n
@@ -14,11 +15,12 @@
 -> move to next split: ctrl + b + <arrowkeys>
 -> move to next split: ctrl + b + q --> numbers
 -> time: ctrl + b + t
-
+```
 
 ### tmux and iTerm
-tmux -CC
-tmux -CC attach
+
+    tmux -CC
+    tmux -CC attach
 
 
 
