@@ -1,5 +1,6 @@
 #Must read links:
-* [http://robots.thoughtbot.com/write-reliable-asynchronous-integration-tests-with-capybara](Write Reliable, Asynchronous Integration Tests With Capybara - Written by thoughtbot)
+
+* [Write Reliable, Asynchronous Integration Tests With Capybara - Written by thoughtbot](http://robots.thoughtbot.com/write-reliable-asynchronous-integration-tests-with-capybara)
 
 #Cheatsheet
 based on [https://gist.github.com/zhengjia/428105](https://gist.github.com/zhengjia/428105)
