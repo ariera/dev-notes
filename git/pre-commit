@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # Place this script in .git/hooks/pre-commit and give it execution rights (chmod +x)
+# based on: https://github.com/markhazlett/RSpec-Pre-commit-Git-Hook
 require 'pty'
 html_path = "rspec_results.html"
 begin
