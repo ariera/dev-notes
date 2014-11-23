@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+# Place this script in .git/hooks/pre-commit and give it execution rights (chmod +x)
+require 'pty'
+html_path = "rspec_results.html"
+begin
+  PTY.spawn( "bin/rspec spec --format h > rspec_results.html 2> /dev/null" ) do |stdin, stdout, pid|
+  begin
+    stdin.each { |line| print line }
+  rescue Errno::EIO
+  end
+end
+rescue PTY::ChildExited
+  puts "Child process exit!"
+end
+
+def success(str=nil)
+  # echo "\e[0;94;41mtest\e[0m"
+  # printf "\033[0;92;mtest\033[0m"
+  puts "\e[0;92;m#{str}\e[0m"
+end
+def error(str=nil)
+  puts "\e[0;94;41m#{str}\e[0m"
+end
+
+# find out if there were any errors
+html = open(html_path).read
+examples = html.match(/(\d+) examples/)[0].to_i rescue 0
+errors = html.match(/(\d+) errors/)[0].to_i rescue 0
+if errors == 0 then
+  errors = html.match(/(\d+) failure/)[0].to_i rescue 0
+end
+pending = html.match(/(\d+) pending/)[0].to_i rescue 0
+
+if errors.zero?
+  success "0 failed! #{examples} run, #{pending} pending"
+  # HTML Output when tests ran successfully:
+  # puts "View spec results at #{File.expand_path(html_path)}"
+  sleep 1
+  exit 0
+else
+  error "\aTESTS FAILED!! Commit will proceed but you should feel bad and fix them ¬_¬"
+  error "View your rspec results at #{File.expand_path(html_path)}"
+  error ""
+  error "#{errors} failed! #{examples} run, #{pending} pending"
+  # Open HTML Ooutput when tests failed
+  # `open #{html_path}`
+  # exit 1
+  exit 0
+end
