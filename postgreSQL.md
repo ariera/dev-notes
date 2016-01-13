@@ -56,3 +56,26 @@ Or, if you don't want/need launchctl, you can just run:
 ### To restore a dump
 `sudo -u postgres psql database_name < ../path/to/dump.sql`
 
+
+# How to export from MySQL with compatibility for PostgreSQL
+
+## To dump
+```bash
+set standard_conforming_strings = 'off';
+set backslash_quote = 'on';
+mysqldump -u root -pPASSWORD --compatible=postgresql DATABASE_NAME  > dump.sql
+```
+
+_(not 100% sure those `set` are necessary. Copied from [wikibooks](https://en.wikibooks.org/wiki/Converting_MySQL_to_PostgreSQL))_
+
+
+## To import
+* Download this script to convert the dump: https://github.com/lanyrd/mysql-postgresql-converter
+
+```bash
+set standard_conforming_strings = 'off';
+set backslash_quote = 'on';
+python db_converter.py dump.sql dump.psql
+psql -d DATABASE_NAME -f dump.sql
+```
+
